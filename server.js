@@ -28,6 +28,8 @@ app.use(function (req, res, next) {
 app.set('views', path.join(__dirname, '/html'));
 app.set('view engine', 'ejs');
 
+app.use(express.static(__dirname + '/resource'));
+
 app.get('/', function (req, res) {
     console.log(__dirname);
     res.render('index', { title: 'Express',name:'Terry' });
