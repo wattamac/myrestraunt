@@ -12,6 +12,16 @@ app.get('/', function (req, res) {
     res.render('index', { title: 'Express',name:'Terry' });
 });
 
+app.get('/restaurants/:id', function(req, res) {
+    var restraunts = require('./data/restaurantInfo');
+    var id = req.params.id;
+    console.log(id);
+    var restarant = restraunts.get(id);
+    console.log(restarant);
+    res.render('restaurantInfo', restarant);
+});
+
+
 app.get("/api/friends", function(req, res) {
     var friends = require('./data/friends_restraunt_list');
     res.send(friends.get());
