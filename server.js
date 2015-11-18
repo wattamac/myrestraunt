@@ -2,17 +2,15 @@ var express = require('express')
     , http = require('http')
     , app = express()
     , server = http.createServer(app);
+var path = require('path');
+
+app.set('views', path.join(__dirname, '/html'));
+app.set('view engine', 'ejs');
 
 app.get('/', function (req, res) {
     console.log(__dirname);
-    res.sendfile(__dirname + '/index.html');
+    res.render('index', { title: 'Express',name:'Terry' });
 });
-
-
-
-
-
-
 
 app.get("/api/friends", function(req, res) {
     var friends = require('./data/friends_restraunt_list');
