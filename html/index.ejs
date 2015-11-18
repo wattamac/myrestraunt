@@ -31,6 +31,21 @@
             for(var i=0; i <= 10; i++ ) {
                 $('.progress .progress-bar').css("width", i*10 +"%");
             }
+
+            setTimeout(function() {
+                $.get( "/api/today", function( data ) {
+                    $('.well').append(data.rest_name).append('<p>');
+                    $('.well').append('<img src=\'' +  data.pic + '\'/>' )
+                    $('.well').append('<button class=\'more\'>more</button>');
+
+                    $('.more').on('click', function () {
+                        location.href = '/restraunts/' + data.id;
+                    })
+                });
+            }, 1000)
+
+
+
         });
     });
 </script>

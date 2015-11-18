@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <title>manage restraunt</title>
+</head>
+<body>
+<div class="form-group" style="width: 100%;display: inline-flex;">
+    <input type="text" class="form-control" style="width:100%" id="restrauntName" placeholder="추가할 식당명을 입력하세요">
+    <button type="submit" class="btn btn-default add_restraunt">추가</button>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">목록</h3>
+    </div>
+    <table class="table table-striped" id="my_table">
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>식당</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="my_list"></tbody>
+    </table>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">친구 추천 식당</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped" id="friends_table">
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>친구</th>
+                <th>추천 식당</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody id="friends_list"></tbody>
+        </table>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    var $parentEl = $('#my_list');
+    var $friendsEl = $('#friends_list');
+
+    $('#my_table').on('click','tr',function(e){
+        $('table').find('tr.success').removeClass('success');
+        $(this).addClass('success');
+    });
+
+    $('#friends_table').on('click','tr',function(e){
+        $('table').find('tr.success').removeClass('success');
+        $(this).addClass('success');
+    });
+
+    var url = 'http://localhost:8000/api';
+    $.getJSON( url + "/restraunts", function( data ) {
+        var $parentEl = $('#my_list');
+        $.each(data, function(i, v){
+            $('<tr><th scope="row">'+ (i+1) +'</th><td>'+ v.name+'</td><td><button type="submit" onclick="javascript:infoEvent(this);" class="btn btn-default btn-sm" data="'+v.name+'">정보</button></td></tr>').appendTo($parentEl);
+        });
+    });
+
+    $.getJSON( url + "/friends", function( data ) {
+        var $parentEl = $('#my_list');
+        $.each(data, function(i, v){
+            $('<tr><th scope="row">'+ (i+1) +'</th><td>'+ v.name +'</td><td>'+ v.list[0].name+'</td><td><button type="button" onclick="javascript:infoEvent(this);" class="btn btn-default btn-sm" data="'+v.name+'">정보</button></td><td><button type="button" onclick="javascript:addRestraunt(this);" class="btn btn-default btn-sm" data="'+v.list[0].name+'">추가</button></td></tr>').appendTo($friendsEl);
+        });
+    });
+
+    function addRestraunt(btn){
+        var $parentEl = $('#my_list');
+        var name = btn.attributes['data'].value;
+        var num = $parentEl.children().length;
+
+        $('<tr><th scope="row">'+ (num+1) +'</th><td>'+ name+'</td><td><button type="submit" onclick="javascript:infoEvent(this);" class="btn btn-default btn-sm" data="'+name+'">정보</button></td></tr>').appendTo($parentEl);
+    }
+
+    $('.add_restraunt').on('click', function(){
+        addRestraunt(this);
+    });
+
+    function infoEvent(btn) {
+        var url = 'http://openapi.naver.com/search?key=c1b406b32dbbbbeee5f2a36ddc14067f&target=blog&query=';
+        var searchVal = btn.attributes['data'].value;
+//        $.ajax({
+//            traditional: true,
+//            type:"GET",
+//            url: url + encodeURIComponent(searchVal),
+////            data : reqData,
+//            headers : {
+//                "Access-Control-Allow-Origin":"*"
+//            },
+//            success:function(res){
+        $('div.modal').modal();
+        $('.modal .modal-title').text('식당정보');
+//            },
+//            error: function(e){
+//
+//            }
+//        });
+//        $.getJSON(url + encodeURIComponent(searchVal), function (data) {
+//            $('div.modal').modal();
+//            $('.modal .modal-title').text('식당정보');
+//        });
+    };
+
+</script>
+
+<div class="modal fade" id="layerpop" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Header</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    식당이름
+                    블로그 리뷰 수
+                    링크
+                    전화번호
+                    추천한 친구들
+
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>
