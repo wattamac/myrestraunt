@@ -11,7 +11,8 @@
 <body>
 <div class="form-group" style="width: 100%;display: inline-flex;">
     <input type="text" class="form-control" style="width:100%" id="restrauntName" placeholder="추가할 식당명을 입력하세요">
-    <button type="submit" class="btn btn-default add_restraunt">추가</button>
+    <button type="submit" class="btn btn-primary add_restraunt">추가</button>
+    <button type="submit" class="btn btn-default _back">이전</button>
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -89,6 +90,9 @@
 
     $('.add_restraunt').on('click', function(){
         addRestraunt(this);
+    });
+    $('._back').on('click', function(){
+        window.location.href = '/';
     });
 
     function infoEvent(btn) {
