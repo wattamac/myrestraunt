@@ -1,7 +1,9 @@
 /**
  * Created by eunsung on 15. 11. 18..
  */
-var friends = [
+exports.get = function() {
+    // blah blah
+    var friends = [
         {
             "name" : "하지원",
             "list" : [
@@ -45,3 +47,6 @@ var friends = [
             ]
         }
     ];
+
+    return friends;
+}
