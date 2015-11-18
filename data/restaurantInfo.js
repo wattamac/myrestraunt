@@ -23,7 +23,7 @@ var restraunts = [
         ]
     },
     {
-        "id" : "3",
+        "id": "3",
         "rest_name": "나라 돈가스",
         "pic": "a3.png",
         "menu": [
@@ -36,7 +36,7 @@ var restraunts = [
         ]
     },
     {
-        "id" : "4",
+        "id": "4",
         "rest_name": "육대장",
         "pic": "a4.jpg",
         "menu": [
@@ -46,7 +46,7 @@ var restraunts = [
         ]
     },
     {
-        "id" : "5",
+        "id": "5",
         "rest_name": "라히노카레",
         "pic": "a5.png",
         "menu": [
@@ -60,16 +60,28 @@ var restraunts = [
     }
 ];
 
-exports.get = function(id) {
-    for(var i = 0 ; i < restraunts.length ; i ++){
+exports.get = function (id) {
+    return get(id);
+};
+
+exports.getRandom = function () {
+    var id = randomRange(1, restraunts.length);
+    return get(String(id));
+}
+
+var randomRange = function (n1, n2) {
+    return Math.floor((Math.random() * (n2 - n1 + 1)) + n1);
+}
+
+var get = function (id) {
+    for (var i = 0; i < restraunts.length; i++) {
         console.log(restraunts[i].id + ", req id : " + id);
-        if(restraunts[i].id === id) {
+        if (restraunts[i].id === id) {
             console.log(restraunts[i])
             return restraunts[i];
         }
     }
     return "";
 }
-
 
 

@@ -31,6 +31,13 @@ app.get("/api/restraunt/:id", function(req, res){
     return res.send(restraunt);
 });
 
+app.get("/api/today", function(req, res){
+    var restraunts = require('./data/restaurantInfo');
+    var restraunt = restraunts.getRandom();
+    console.log(restraunt);
+    return res.send(restraunt);
+});
+
 server.listen(8000, function() {
     console.log('Express server listening on port ' + server.address().port);
 });
