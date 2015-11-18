@@ -8,13 +8,13 @@
 <div class="container">
     <div class="form-group" style="width: 100%;display: inline-flex;">
         <div style="width:100%;">
-            <h1><%= title %>title <!--오늘 뭐 먹지? --></h1>
+            <h1>오늘 뭐 먹지?</h1>
         </div>
         <div style="padding-top: 30px;">
             <button type="button" class="btn btn-primary btn-sm _manage">식당관리</button>
         </div>
     </div>
-    <div class="well">TODAY is ... </div>
+    <div class="well"></div>
     <div class="progress" style="display: none;">
         <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
             <span class="sr-only">20% Complete</span>
@@ -22,7 +22,7 @@
     </div>
 
     <div class="row text-center" >
-    <button type="submit" class="btn btn-primary btn-lg goToday" >Submit<!-- 뭐 먹을까? --></button>
+    <button type="submit" class="btn btn-primary btn-lg goToday" >GO<!-- 뭐 먹을까? --></button>
     </div>
 </div>
 
@@ -35,21 +35,25 @@
 
         $('.goToday').on('click', function () {
             $('.progress').toggle();
-
+            $('.well').html('');
             for(var i=0; i <= 10; i++ ) {
                 $('.progress .progress-bar').css("width", i*10 +"%");
             }
 
             setTimeout(function() {
                 $.get( "/api/today", function( data ) {
+
+                    $('.well').append('TODAY is ... ');
                     $('.well').append(data.rest_name).append('<p>');
-                    $('.well').append('<img src=\'' +  data.pic + '\'/>' )
+                    $('.well').append('<img src=\'' +  data.pic + '\' style=\'width:300px;height:200px;\'/>' )
                     $('.well').append('<button class=\'more\'>more</button>');
 
                     $('.more').on('click', function () {
-                        location.href = '/restraunts/' + data.id;
+                        location.href = '/restaurants/' + data.id;
                     })
                 });
+                $('.progress').toggle();
+                $('.progress .progress-bar').css("width", "0%");
             }, 1000)
 
 

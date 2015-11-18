@@ -48,7 +48,7 @@ var restraunts = [
     {
         "id": "5",
         "rest_name": "라히노카레",
-        "pic": "a5.png",
+        "pic": "a5.jpg",
         "menu": [
             {"name": "기본카레", "price": "6,000"},
             {"name": "돈가스카레", "price": "7,000"},
